@@ -5,7 +5,9 @@ from .views import (
     UserViewset,
     ListingViewset,
     BookingViewset,
-    ReviewViewSet
+    ReviewViewSet,
+    initialize_payment,
+    verify_payment
     )
 
 # Main router for top-level resources
@@ -22,5 +24,7 @@ listings_router.register(r'reviews', ReviewViewSet, basename='listing-reviews')
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(listings_router.urls)),
-    path('api-auth', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
+    path('payments/initialize-payment/', initialize_payment, name='initialize-payment'),
+    path('payments/verify-payment/<str:tx_ref>/', verify_payment, name='verify-payment'),
 ]
